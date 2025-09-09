@@ -45,39 +45,56 @@ file_put_contents($threads_file, json_encode($threads, JSON_PRETTY_PRINT | JSON_
 ?>
 <!DOCTYPE html>
 <html>
-<head><meta charset="UTF-8"><title>untitled</title></head>
+<head><meta charset="UTF-8"><title>all</title></head>
 <body>
 <center><img src="http://404chan.gt.tc/logo.gif" width="447" height="82">
 
-<table border="1" width="95%"><tr><td><h1>untitled</h1></td></tr></table>
-<br>
-<!-- 全スレッドリンク集 -->
-<table border="1" width="95%">
- <tr>
-  <td>
-<center>
-<?php foreach ($threads as $i => $thread): ?>
-    <?php echo $i+1; ?>:<a href="thread.php?id=<?php echo $thread['id']; ?>">
-        <?php echo $thread['title']; ?>
-    </a>
-<?php endforeach; ?>
+<h1>all</h1>
+<center><hr width="80%">
+<a href="#" id="showFormLink">[Start a New Thread]</a>
+
+<div id="formContainer" style="display:none;">
+    <form method="post">
+        <table>
+            <tr>
+                <td bgcolor="eeaa88">name: </td>
+                <td><input type="text" name="name"></td>
+            </tr>
+            <tr>
+                <td bgcolor="eeaa88">e-mail: </td>
+                <td><input type="text" name="email"></td>
+            </tr>
+            <tr>
+                <td bgcolor="eeaa88">title: </td>
+                <td>
+                    <input type="text" name="title" required>
+                    <input type="submit" value="post">
+                </td>
+            </tr>
+            <tr>
+                <td bgcolor="eeaa88" height="62">comment: </td>
+                <td><textarea name="content" rows="4" cols="48" required></textarea></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<script>
+document.getElementById("showFormLink").addEventListener("click", function(e) {
+    e.preventDefault(); // ページ遷移を防ぐ
+    this.style.display = "none"; // リンクを消す
+    document.getElementById("formContainer").style.display = "block"; // フォームを表示
+});
+</script></center>
+<hr>
 </center>
-  </td>
- </tr>
-</table>
 
 <!-- 各スレ表示 -->
 <?php foreach ($threads as $i => $thread): ?>
-<table border="1" width="95%">
- <tr>
-  <td>
     <h1><a href="thread.php?id=<?php echo $thread['id']; ?>">
         <?php echo $thread['title']; ?>
     </a></h1>
-    <table>
         <?php foreach ($thread['posts'] as $j => $post): ?>
-            <tr>
-                <td>
                     <?php
                         $display_name = $post['name'];
                         if (!empty($post['email'])) {
@@ -85,34 +102,12 @@ file_put_contents($threads_file, json_encode($threads, JSON_PRETTY_PRINT | JSON_
                         }
                     ?>
                     <?php echo $j+1; ?> : <font color="green"><?php echo $display_name; ?></font> : <?php echo $post['time']; ?> ID:<?php echo $post['id']; ?><br>
-                    <?php echo $post['content']; ?>
-                </td>
-            </tr>
+                    <?php echo $post['content']; ?><br>
         <?php endforeach; ?>
-    </table>
-  </td>
- </tr>
-</table>
+<hr>
 <br>
 <?php endforeach; ?>
-</center>
-
 <center>
-<table border="1" width="95%">
- <tr>
-  <td>
-<h2>Post a new thread</h2>
-<form method="post">
-    name: <input type="text" name="name"><br>
-    email: <input type="text" name="email"><br>
-    title: <input type="text" name="title" required><br>
-    comment:<br>
-    <textarea name="content" rows="4" cols="50" required></textarea><br>
-    <input type="submit" value="post">
-</form>
-  </td>
- </tr>
-</table>
-</center>
+
 </body>
 </html>
