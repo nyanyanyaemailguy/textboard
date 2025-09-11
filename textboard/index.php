@@ -77,12 +77,18 @@ file_put_contents($threads_file, json_encode($threads, JSON_PRETTY_PRINT | JSON_
             </tr>
         </table>
     </form>
+<table>
+ <tr>
+  <td>
 <ul>
  <li>Let's be kind and gentle.</li>
  <li>Please refrain from posting anything that violates public order and morals.</li>
  <li>No politics.</li>
  <li>Except for /pol/ and /b/.</li>
 </ul>
+  </td>
+ </tr>
+</table>
 </div>
 
 <script>
